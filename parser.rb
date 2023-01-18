@@ -1,4 +1,5 @@
 class Parser
+  
   def initialize(file_path)
     @file_path = file_path
     @games = []
