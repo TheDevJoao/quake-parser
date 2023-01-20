@@ -35,4 +35,12 @@ class Game
     " Kills: \n#{format_kills}\n" +
     "}\n"
   end
+
+  def print_report
+    puts "Game #{@game_number} Leaderboard:"
+    players.sort_by { |name, player| -player.kills }.each do |name, player|
+        puts "#{player.name} - #{player.kills} kills"
+    end
+  end
+  
 end
