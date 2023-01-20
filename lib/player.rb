@@ -21,11 +21,11 @@ class Player
 
   def who_killed_who(victim)
     if victim == @name
-      @deaths +=1
-      @kills -= 1
+      add_death
+      lose_kill
     else
-      @kills +=1
-      @deaths +=1
+      add_death
+      add_kill
     end
   end
 
