@@ -8,6 +8,10 @@ class Game
     @total_kills = 0
   end
 
+  def id
+    @game_number
+  end
+
   def add_player(player)
     @players[player.name] = player
   end
@@ -30,5 +34,12 @@ class Game
     " Players: #{players_name.join(', ')}\n" +
     " Kills: \n#{format_kills}\n" +
     "}\n"
+  end
+
+  def print_report
+    puts "Game #{@game_number} Leaderboard:"
+    players.sort_by { |name, player| -player.kills }.each do |name, player|
+        puts "#{player.name} - #{player.kills} kills"
+    end
   end
 end

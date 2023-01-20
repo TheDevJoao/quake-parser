@@ -5,16 +5,15 @@ class Parser
   def initialize(file_path)
     @file_path = file_path
     @file_content = open_file(@file_path)
+    @games = []
   end
 
   def parse
-    games = []
     current_game = nil
     players = {}
-
     @file_content.each do |line| 
       if start_game?(line)
-        current_game = new_game(games)
+        current_game = new_game(@games)
         players = {}
       elsif kill_line?(line)
         killer, victim = killer_victim(line)
@@ -34,14 +33,15 @@ class Parser
         end
       end
     end
-    games.each {|game| puts game.show_game }
+    @games.each {|game| puts game.show_game }
+    @games.each {|game| game.print_report }
   end
 
   private
 
   def new_game(games)
     current_game = Game.new(games.size + 1)
-    games << current_game
+    @games << current_game
     current_game
   end
 
