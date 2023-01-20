@@ -9,13 +9,11 @@ class Parser
   end
 
   def parse
-    @current_game = nil
+    current_game = nil
     players = {}
     @file_content.each do |line| 
       if start_game?(line)
-        if @current_game.nil?
-          @current_game = new_game(@games)
-        end
+        current_game = new_game(@games)
         players = {}
       elsif kill_line?(line)
         killer, victim = killer_victim(line)
@@ -25,13 +23,13 @@ class Parser
         if killer == "<world>"
           players[victim].lose_kill
           players[victim].add_death
-          @current_game.add_kill
+          current_game.add_kill
         else
           players[killer].add_kill
           players[victim].add_death
           players[killer].who_killed_who(players[victim].name)
-          @current_game.add_kill
-          @current_game.add_player(players[killer])
+          current_game.add_kill
+          current_game.add_player(players[killer])
         end
       end
     end
@@ -40,9 +38,9 @@ class Parser
   end
 
   def new_game(games)
-    @current_game = Game.new(games.size + 1)
-    @games << @current_game
-    @current_game
+    current_game = Game.new(games.size + 1)
+    @games << current_game
+    current_game
   end
 
   def start_game?(str)
